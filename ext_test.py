@@ -38,7 +38,10 @@ with sync_playwright() as p:
             cite: a.querySelector('cite') ? a.querySelector('cite').innerText : ''
         }))
     """)
-    matches = [(i, resolve(r['href'])) for i, r in enumerate(results, 1) if DOMAIN in r['cite'].lower()]
+    matches = []
+    for i, r in enumerate(results, 1):
+        if DOMAIN in r['cite'].lower():
+            matches.append((i, resolve(r['href'])))
     print(f"KEYWORD: {KW}")
     print(f"SCANNED: {len(results)} results")
     if matches:
